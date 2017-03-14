@@ -1,5 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 
-const App = () => <h1>Hello Scott!</h1>;
+class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {}
+  }
+
+  render() {
+    return (
+      <div>
+        <header>
+          <h1>SteamComp</h1>
+        </header>
+        { this.props.children }
+        <footer>
+          <h1>footer</h1>
+        </footer>
+      </div>
+    );
+  }
+}
 
 export default App;
