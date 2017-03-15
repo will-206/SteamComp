@@ -10,6 +10,10 @@ const passport = require('passport');
 const util = require('util');
 const session = require('express-session');
 const SteamStrategy = require('passport-steam').Strategy;
+const bodyParser = require('body-parser');
+// const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
+
 
 app.use(compression());
 app.use(STATIC_PATH, express.static('dist'));
@@ -24,21 +28,18 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new SteamStrategy({
-    returnURL: `http://localhost:${WEB_PORT}/main`,
+    returnURL: `http://localhost:${WEB_PORT}/api/auth/steam/return`,
     realm: `http://localhost:${WEB_PORT}/`,
     apiKey: '6BA046BB9CE80B47542106C87D5D3F84'
   },
   function(identifier, profile, done) {
     process.nextTick(function () {
-
+      // console.log('passport.use', profile);
       profile.identifier = identifier;
       return done(null, profile);
     });
   }
 ));
-
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
 
 app.use(session({
     secret: 'your secret',
@@ -50,29 +51,21 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(__dirname + '/../../public'));
 
-app.get('/', function(req, res){
-  res.render('index', { user: req.user });
-});
-
-app.get('/account', ensureAuthenticated, function(req, res){
-  res.render('account', { user: req.user });
-});
-
-app.get('/logout', function(req, res){
+app.use(require('./routes/userInfo'));
+//steam api
+app.get('/main/api/logout', function(req, res){
   req.logout();
-  res.redirect('/landing');
+  res.redirect('/login');
 });
 
-app.get('/auth/steam',
-  passport.authenticate('steam', { failureRedirect: '/landing' }),
-  function(req, res) {
-    res.redirect('/');
-  });
+app.get('/api/auth/steam',
+  passport.authenticate('steam', { failureRedirect: '/login' }
+));
 
-app.get('/auth/steam/return',
-  passport.authenticate('steam', { failureRedirect: '/landing' }),
+app.get('/api/auth/steam/return',
+  passport.authenticate('steam', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('/');
+    res.redirect('/main/' + req.user.id);
   });
 
 function ensureAuthenticated(req, res, next) {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 
-class Landing extends Component {
+class Login extends Component {
   constructor(props) {
     super(props)
 
@@ -18,7 +18,7 @@ class Landing extends Component {
   render() {
     return (
       <div>
-        <a href="auth/steam">
+        <a href="api/auth/steam">
           <img
             className="sign-in-button"
             onClick={this.handleSignIn}
@@ -30,4 +30,4 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+export default Login;

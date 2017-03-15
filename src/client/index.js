@@ -7,7 +7,7 @@ import { Router, Route, browserHistory } from 'react-router';
 import App from './app';
 import { APP_CONTAINER_SELECTOR } from '../shared/config';
 
-import Landing from './Landing';
+import Login from './Login';
 import Main from './Main';
 
 const rootEl = document.querySelector(APP_CONTAINER_SELECTOR);
@@ -16,8 +16,8 @@ const wrapApp = AppComponent =>
 
   <Router history={browserHistory}>
     <Route path='/' component={App}>
-      <Route path='/landing' component={Landing} />
-      <Route path='/main' component={Main} />
+      <Route path='/login' component={Login} />
+      <Route path='/main/:userId' component={Main} />
     </Route>
   </Router>
 
