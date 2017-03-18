@@ -23,6 +23,8 @@ class Main extends Component {
     axios.get(`/userInfo?ID=${this.props.params.userId}`)
     .then((res) => {
       self.setState({userInfo: res.data.response.players[0]})
+      self.setState({compareIds: [this.state.userInfo.steamid]})
+      self.compareGames();
     })
     .catch((err) => {
       console.log(err);
@@ -82,10 +84,6 @@ class Main extends Component {
   // takes a list of ids, return
   compareGames() {
     const compareIds = this.state.compareIds;
-    const userId = this.state.userInfo.steamid;
-    if (userId && !compareIds.includes(userId)) {
-      compareIds.push(userId)
-    }
     console.log(compareIds);
 
     const orderedResult = [];
@@ -116,6 +114,9 @@ class Main extends Component {
       }
       console.log(orderedResult);
     })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   render() {
@@ -127,7 +128,6 @@ class Main extends Component {
 
         <FriendList
           friends={this.state.friendsInfo}
-          compareIds={this.state.compareIds}
           onCheck={this.onCheckboxChange}
         />
         <Games

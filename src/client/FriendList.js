@@ -41,11 +41,22 @@ function formatPersonaState(state, lastOnline) {
   }
 }
 
+function onlineFriendCount(friends) {
+  console.log(friends);
+  let count = 0;
+  for (let elem in friends) {
+    if (friends[elem].personastate !== 0) {
+      count ++;
+    }
+  }
+  return count;
+}
+
 function FriendList(props) {
-  const { friends, compareIds, onCheck } = props;
+  const { friends, onCheck } = props;
   return (
     <div className="Friends">
-      <h2>Friends</h2>
+      <h2>Friends {onlineFriendCount(friends) + ' Online'}</h2>
       <div>
         {friends[0] ?
           <div>
