@@ -15,9 +15,7 @@ class App extends Component {
           <h1>SteamComp</h1>
         </header>
         { this.props.children }
-        <footer>
-          <h1>footer</h1>
-        </footer>
+        <footer></footer>
       </div>
     );
   }

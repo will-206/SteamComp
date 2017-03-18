@@ -52,6 +52,7 @@ app.use(passport.session());
 app.use(express.static(__dirname + '/../../public'));
 
 app.use(require('./routes/userInfo'));
+
 //steam api
 app.get('/main/api/logout', function(req, res){
   req.logout();
