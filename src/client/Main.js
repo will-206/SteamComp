@@ -115,7 +115,6 @@ class Main extends Component {
         orderedResult[orderedResult.length - arr.length].push({key, owners: this.state.gamesObj[key]})
       }
       console.log(orderedResult);
-      console.log(this.state.friendsInfo);
     })
   }
 

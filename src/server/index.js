@@ -1,6 +1,8 @@
 import compression from 'compression';
 import express from 'express';
 
+require('dotenv').load();
+
 import { APP_NAME, STATIC_PATH, WEB_PORT } from '../shared/config';
 import { isProd } from '../shared/util';
 import renderApp from './render-app';
@@ -30,7 +32,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new SteamStrategy({
     returnURL: `http://localhost:${WEB_PORT}/api/auth/steam/return`,
     realm: `http://localhost:${WEB_PORT}/`,
-    apiKey: '6BA046BB9CE80B47542106C87D5D3F84'
+    apiKey: process.env.STEAM_API_KEY
   },
   function(identifier, profile, done) {
     process.nextTick(function () {
