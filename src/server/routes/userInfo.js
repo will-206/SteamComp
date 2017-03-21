@@ -34,4 +34,15 @@ router.get('/games', (req, res, next) => {
   });
 })
 
+router.get('/gameInfo', (req, res, next) => {
+  console.log('requested gameInfo');
+  const gameId = req.query.ID;
+  request(`http://store.steampowered.com/api/appdetails?appids=${gameId}`, (error, response, body) => {
+    if (error) {
+      res.send(error)
+    }
+    res.send(body);
+  });
+})
+
 module.exports = router;

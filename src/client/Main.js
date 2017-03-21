@@ -12,7 +12,8 @@ class Main extends Component {
       friendsIds: [],
       friendsInfo: [],
       compareIds: [],
-      gamesObj: {}
+      gamesObj: {},
+      orderedResult: []
     }
 
     this.onCheckboxChange = this.onCheckboxChange.bind(this);
@@ -68,7 +69,6 @@ class Main extends Component {
 
   onCheckboxChange(event) {
     const friendId = event.target.value
-    //console.log(friendId);
     const compareIds = this.state.compareIds;
     const checked = compareIds.includes(friendId);
 
@@ -81,12 +81,10 @@ class Main extends Component {
     this.compareGames();
   }
 
-  // takes a list of ids, return
   compareGames() {
     const compareIds = this.state.compareIds;
-    console.log(compareIds);
-
     const orderedResult = [];
+
     for (let elem in compareIds) {
       orderedResult.push([]);
     }
@@ -112,7 +110,7 @@ class Main extends Component {
         const arr = this.state.gamesObj[key];
         orderedResult[orderedResult.length - arr.length].push({key, owners: this.state.gamesObj[key]})
       }
-      console.log(orderedResult);
+      this.setState({orderedResult})
     })
     .catch((err) => {
       console.log(err);
@@ -134,6 +132,7 @@ class Main extends Component {
           userInfo={this.state.userInfo}
           friends={this.state.friendsInfo}
           compareIds={this.state.compareIds}
+          games={this.state.orderedResult}
         />
       </div>
     );
