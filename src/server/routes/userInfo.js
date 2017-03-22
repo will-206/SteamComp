@@ -26,7 +26,7 @@ router.get('/userFriends', (req, res, next) => {
 router.get('/games', (req, res, next) => {
   console.log('requested games');
   const user = req.query.ID;
-  request(`http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${user}&format=json`, (error, response, body) => {
+  request(`http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${user}&include_played_free_games=1&format=json`, (error, response, body) => {
     if (error) {
       res.send(error)
     }
