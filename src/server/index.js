@@ -33,7 +33,7 @@ passport.deserializeUser(function(obj, done) {
 
 passport.use(new SteamStrategy({
     returnURL: `https://steamcomp.herokuapp.com/api/auth/steam/return`,
-    realm: `https://steamcomp.herokuapp.com/`,
+    realm: `https://steamcomp.herokuapp.com/login`,
     apiKey: process.env.STEAM_API_KEY
   },
   function(identifier, profile, done) {
