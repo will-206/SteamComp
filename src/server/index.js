@@ -1,7 +1,9 @@
 import compression from 'compression';
 import express from 'express';
 
-require('dotenv').load();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 import { APP_NAME, STATIC_PATH, WEB_PORT } from '../shared/config';
 import { isProd } from '../shared/util';
@@ -36,7 +38,6 @@ passport.use(new SteamStrategy({
   },
   function(identifier, profile, done) {
     process.nextTick(function () {
-      // console.log('passport.use', profile);
       profile.identifier = identifier;
       return done(null, profile);
     });
