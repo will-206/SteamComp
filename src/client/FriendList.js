@@ -4,7 +4,7 @@ function formatLastOnline(lastOnline) {
   const secondsAgo = Math.round(new Date().getTime() / 1000) - lastOnline;
   const minutesAgo = Math.floor(secondsAgo/60);
   const hoursAgo = Math.floor(minutesAgo/60);
-  const daysAgo = Math.floor(hoursAgo/60);
+  const daysAgo = Math.floor(hoursAgo/24);
   const monthsAgo = Math.floor(daysAgo/30);
 
   let str = '';
@@ -42,7 +42,6 @@ function formatPersonaState(state, lastOnline) {
 }
 
 function onlineFriendCount(friends) {
-  console.log(friends);
   let count = 0;
   for (let elem in friends) {
     if (friends[elem].personastate !== 0) {
@@ -50,6 +49,14 @@ function onlineFriendCount(friends) {
     }
   }
   return count;
+}
+
+function sortStatus(a, b){
+  return b.personastate - a.personastate;
+}
+
+function sortTime(a, b){
+  return b.lastlogoff - a.lastlogoff;
 }
 
 function FriendList(props) {
@@ -60,7 +67,7 @@ function FriendList(props) {
       <div>
         {friends[0] ?
           <div>
-          { friends.map(friend => (
+          { friends.sort(sortTime).sort(sortStatus).map(friend => (
             <div key={friend.steamid}>
               <input
                 type='checkbox'
@@ -74,7 +81,7 @@ function FriendList(props) {
             </div>
           ))
           }
-        </div> : 'loading'
+        </div> : 'loading...'
         }
       </div>
     </div>

@@ -13,6 +13,7 @@ class Main extends Component {
       friendsInfo: [],
       compareIds: [],
       gamesObj: {},
+      gamesArr: [],
       orderedResult: []
     }
 
@@ -68,6 +69,7 @@ class Main extends Component {
   }
 
   onCheckboxChange(event) {
+    this.setState({gamesArr:[]});
     const friendId = event.target.value
     const compareIds = this.state.compareIds;
     const checked = compareIds.includes(friendId);
@@ -97,23 +99,54 @@ class Main extends Component {
       responses.map((games, idx) => {
         games.data.response.games.map((game) => {
           if (gamesObj[game.appid]) {
-            gamesObj[game.appid].push(compareIds[idx]);
+            gamesObj[game.appid].owners.push(compareIds[idx]);
           } else {
-            gamesObj[game.appid] = [compareIds[idx]];
+            gamesObj[game.appid] = { owners: [compareIds[idx]] };
           }
         })
       })
-      this.setState({gamesObj})
+      return gamesObj;
     })
-    .then(() =>{
-      for (let key in this.state.gamesObj) {
-        const arr = this.state.gamesObj[key];
-        orderedResult[orderedResult.length - arr.length].push({key, owners: this.state.gamesObj[key]})
+    .then((gamesObj) =>{
+      function atLeastOne(elem){
+        return gamesObj[elem].owners.length > 1;
       }
-      this.setState({orderedResult})
+      const gamesInfoPromises = Object.keys(gamesObj).filter(atLeastOne).map(ele => {
+        return this.getGameInfo(ele, gamesObj[ele].owners);
+      })
+
+      return Promise.all(gamesInfoPromises);
+    })
+    .then((games) => {
+      console.log(games);
+      this.setState({gamesArr:games})
     })
     .catch((err) => {
       console.log(err);
+    })
+  }
+
+  getGameInfo(id, owners) {
+    return new Promise((resolve,reject) => {
+      axios.get(`/gameInfo?ID=${id}`)
+      .then((res) => {
+        const data = res.data[id].data;
+        resolve({
+          id:id,
+          owners:owners,
+          data : data,
+          err: null
+        });
+      }).
+      catch((err) => {
+        console.log(err, id);
+        resolve({
+          id:id,
+          owners:owners,
+          data : null,
+          err: err
+        })
+      });
     })
   }
 
@@ -132,7 +165,7 @@ class Main extends Component {
           userInfo={this.state.userInfo}
           friends={this.state.friendsInfo}
           compareIds={this.state.compareIds}
-          games={this.state.orderedResult}
+          games={this.state.gamesArr}
         />
       </div>
     );

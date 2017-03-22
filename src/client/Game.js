@@ -6,24 +6,9 @@ class game extends Component {
     super(props)
 
     this.state = {
-      gameData: {}
+
     }
-    this.getOwnersNames = this.getOwnersNames.bind(this);
-  }
 
-  getGame(id){
-    axios.get(`/gameInfo?ID=${id}`)
-    .then((res) => {
-      // console.log(this.props.friends);
-
-      this.setState({gameData: res.data[id].data});
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }
-  componentDidMount() {
-    this.getGame(this.props.game)
   }
   getOwnersNames() {
     const names = this.props.owners.map((elem) => {

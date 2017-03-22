@@ -68,6 +68,10 @@ app.get('/api/auth/steam',
 app.get('/api/auth/steam/return',
   passport.authenticate('steam', { failureRedirect: '/login' }),
   function(req, res) {
+    console.log(req.user);
+    console.log(req.user._json.steamid);
+    console.log(req.user.id);
+
     res.redirect('/main/' + req.user.id);
   });
 
