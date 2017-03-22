@@ -80,10 +80,14 @@ class Main extends Component {
       compareIds.push(friendId)
     }
     this.setState({compareIds})
+    localStorage.setItem('compareIds', compareIds);
     this.compareGames();
   }
 
   compareGames() {
+    this.setState({
+      compareIds: localStorage.getItem('compareIds').split(',') || []
+    })
     const compareIds = this.state.compareIds;
     const orderedResult = [];
 
@@ -159,6 +163,7 @@ class Main extends Component {
 
         <FriendList
           friends={this.state.friendsInfo}
+          compareIds={this.state.compareIds}
           onCheck={this.onCheckboxChange}
         />
         <Games

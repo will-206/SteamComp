@@ -60,7 +60,7 @@ function sortTime(a, b){
 }
 
 function FriendList(props) {
-  const { friends, onCheck } = props;
+  const { friends, onCheck, compareIds } = props;
   return (
     <div className="Friends">
       <h2>Friends {onlineFriendCount(friends) + ' Online'}</h2>
@@ -74,6 +74,7 @@ function FriendList(props) {
                 name='test'
                 value={friend.steamid}
                 onChange={onCheck}
+                checked={compareIds.includes(friend.steamid)}
               />
               <img src={friend.avatar}></img>
               <a>{friend.personaname}</a>
