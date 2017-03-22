@@ -27,7 +27,17 @@ class Games extends Component {
   //   return names;
   // }
   orderBySimilar(a, b) {
-    return b.owners.length - a.owners.length;
+    let owners = b.owners.length - a.owners.length;
+    if (owners === 0){
+      if(b.data.name < a.data.name){
+        owners++;
+      }
+      else if (b.data.name > a.data.name){
+        owners--;
+      }
+    }
+
+    return owners;
   }
 
   updateSearch(event) {
@@ -86,6 +96,7 @@ class Games extends Component {
                 <div key={game.id}>
                   <img src={game.data.header_image}
                   alt={game.data.name}/>
+                  <a>{game.data.name}</a>
                   <a> {game.owners.length}/{this.props.compareIds.length} </a>
                   {game.data.metacritic
                     ? <a href={game.data.metacritic.url}>Metacritic: {game.data.metacritic.score}/100</a>
