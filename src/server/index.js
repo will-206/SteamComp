@@ -3,6 +3,9 @@ import express from 'express';
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
+  // const url =
+} else {
+  const url = 'https://steamcomp.herokuapp.com/';
 }
 
 import { APP_NAME, STATIC_PATH, WEB_PORT } from '../shared/config';
@@ -32,7 +35,7 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new SteamStrategy({
-    returnURL: `https://steamcomp.herokuapp.com/api/auth/steam/return`,
+    returnURL: `api/auth/steam/return`,
     realm: `https://steamcomp.herokuapp.com/`,
     apiKey: process.env.STEAM_API_KEY
   },
