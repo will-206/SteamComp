@@ -1,13 +1,8 @@
 import compression from 'compression';
 import express from 'express';
 
-const localRealm = '';
-const url = '';
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
-  const localRealm = `http://localhost:${WEB_PORT}/`
-} else {
-  const url = 'https://steamcomp.herokuapp.com/';
 }
 
 import { APP_NAME, STATIC_PATH, WEB_PORT } from '../shared/config';
@@ -37,8 +32,8 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new SteamStrategy({
-    returnURL: `${url}api/auth/steam/return`,
-    realm: `${url}${localRealm}`,
+    returnURL: `https://steamcomp.herokuapp.com/api/auth/steam/return`,
+    realm: `https://steamcomp.herokuapp.com/`,
     apiKey: process.env.STEAM_API_KEY
   },
   function(identifier, profile, done) {
