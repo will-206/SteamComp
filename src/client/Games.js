@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import Game from './Game';
 
 class Games extends Component {
   constructor(props) {
@@ -8,24 +7,15 @@ class Games extends Component {
     this.state = {
       size: 50,
       search: '',
-      multiplayerOnly: false
+      multiplayerOnly: false,
+      friendsObj: {}
     }
     this.orderBySimilar = this.orderBySimilar.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
     this.onCheck = this.onCheck.bind(this);
+    this.idsToNames = this.idsToNames.bind(this);
   }
 
-  // const friendsObj = friends.reduce((result, elem) => {
-  //   result[elem.steamid] = elem.personaname;
-  // return result
-  // }, {})
-  // friendsObj[userInfo.steamid] = userInfo.personaname;
-  // getOwnersNames() {
-  //   const names = this.props.owners.map((elem) => {
-  //     return this.props.friends[elem];
-  //   })
-  //   return names;
-  // }
   orderBySimilar(a, b) {
     let owners = b.owners.length - a.owners.length;
     if (owners === 0){
@@ -48,9 +38,27 @@ class Games extends Component {
     this.setState({multiplayerOnly: !this.state.multiplayerOnly});
   }
 
+  idsToNames(ids) {
+    console.log(this.state.friendsObj);
+    // for (let elem in ids) {
+    //   console.log(ids[elem]);
+    //   console.log(this.state.friendsObj.[ids[elem]]);
+    // }
+  }
+
+  componentDidMount() {
+    const friendsObj = this.props.friends.reduce((result, elem) => {
+      result[elem.steamid] = elem.personaname;
+      return result
+    }, {})
+    this.setState({friendsObj})
+    console.log(friendsObj);
+    // friendsObj[userInfo.steamid] = userInfo.personaname;
+  }
+
   render() {
     let filteredResult = this.props.games
-    .filter((e)=> e.data)
+    .filter((game)=> game.data)
     .filter((game) => {
       if (!this.state.multiplayerOnly) {
         return true;
@@ -68,6 +76,7 @@ class Games extends Component {
       return game.data.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
     })
     .sort(this.orderBySimilar);
+
     return (
       <div className="Games">
         <h2>Games</h2>
@@ -102,9 +111,12 @@ class Games extends Component {
                     ? <a href={game.data.metacritic.url}>Metacritic: {game.data.metacritic.score}/100</a>
                     : <a></a>
                   }
+                  <br />
+                  {game.owners.map(owner => (
+                    <a key={game.owner}>{game.owner}</a>
+                  ))}
                 </div>
-              ))
-              }
+              ))}
             </div>
             : this.props.compareIds.length > 1 ? 'loading...' : 'Select at least one friend to compare games with'
           }

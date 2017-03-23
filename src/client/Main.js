@@ -18,6 +18,7 @@ class Main extends Component {
     }
 
     this.onCheckboxChange = this.onCheckboxChange.bind(this);
+    this.onLogOut = this.onLogOut.bind(this);
   }
 
   getUserInfo() {
@@ -122,8 +123,9 @@ class Main extends Component {
       return Promise.all(gamesInfoPromises);
     })
     .then((games) => {
-      console.log(games);
+      // console.log(games);
       this.setState({gamesArr:games})
+      console.log(this.state.friendsInfo);
     })
     .catch((err) => {
       console.log(err);
@@ -154,12 +156,19 @@ class Main extends Component {
     })
   }
 
+  onLogOut() {
+    localStorage.clear();
+  }
+
   render() {
     return (
       <div>
         <img src={this.state.userInfo.avatarmedium}></img>
         <a>{this.state.userInfo.personaname} </a>
-        <a href="api/logout">Logout</a>
+        <a
+          href="api/logout"
+          onClick={this.onLogOut}
+        >Logout</a>
 
         <FriendList
           friends={this.state.friendsInfo}

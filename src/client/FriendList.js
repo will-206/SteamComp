@@ -69,15 +69,27 @@ function FriendList(props) {
           <div>
           { friends.sort(sortTime).sort(sortStatus).map(friend => (
             <div key={friend.steamid}>
+              {friend.communityvisibilitystate !== 3 ?
               <input
                 type='checkbox'
-                name='test'
+                name='friendCheckbox'
+                // value={friend.steamid}
+                // onChange={onCheck}
+                // checked={compareIds.includes(friend.steamid)}
+                disabled="disabled"
+                title='Profile is Private'
+              />
+              :
+              <input
+                type='checkbox'
+                name='friendCheckbox'
                 value={friend.steamid}
                 onChange={onCheck}
                 checked={compareIds.includes(friend.steamid)}
               />
+              }
               <img src={friend.avatar}></img>
-              <a>{friend.personaname}</a>
+              <a href={friend.profileurl}>{friend.personaname}</a>
               <a> {formatPersonaState(friend.personastate, friend.lastlogoff)}</a>
             </div>
           ))
