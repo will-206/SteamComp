@@ -13,7 +13,7 @@ class Games extends Component {
     this.orderBySimilar = this.orderBySimilar.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
     this.onCheck = this.onCheck.bind(this);
-    this.idsToNames = this.idsToNames.bind(this);
+    // this.idsToNames = this.idsToNames.bind(this);
   }
 
   orderBySimilar(a, b) {
