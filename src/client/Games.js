@@ -38,23 +38,23 @@ class Games extends Component {
     this.setState({multiplayerOnly: !this.state.multiplayerOnly});
   }
 
-  idsToNames(ids) {
-    console.log(this.state.friendsObj);
-    // for (let elem in ids) {
-    //   console.log(ids[elem]);
-    //   console.log(this.state.friendsObj.[ids[elem]]);
-    // }
-  }
+  // idsToNames(ids) {
+  //   console.log(this.state.friendsObj);
+  //   // for (let elem in ids) {
+  //   //   console.log(ids[elem]);
+  //   //   console.log(this.state.friendsObj.[ids[elem]]);
+  //   // }
+  // }
 
-  componentDidMount() {
-    const friendsObj = this.props.friends.reduce((result, elem) => {
-      result[elem.steamid] = elem.personaname;
-      return result
-    }, {})
-    this.setState({friendsObj})
-    console.log(friendsObj);
-    // friendsObj[userInfo.steamid] = userInfo.personaname;
-  }
+  // componentDidMount() {
+  //   const friendsObj = this.props.friends.reduce((result, elem) => {
+  //     result[elem.steamid] = elem.personaname;
+  //     return result
+  //   }, {})
+  //   this.setState({friendsObj})
+  //   console.log(friendsObj);
+  //   // friendsObj[userInfo.steamid] = userInfo.personaname;
+  // }
 
   render() {
     let filteredResult = this.props.games
@@ -111,10 +111,10 @@ class Games extends Component {
                     ? <a href={game.data.metacritic.url}>Metacritic: {game.data.metacritic.score}/100</a>
                     : <a></a>
                   }
-                  <br />
+                  {/* <br />
                   {game.owners.map(owner => (
                     <a key={game.owner}>{game.owner}</a>
-                  ))}
+                  ))} */}
                 </div>
               ))}
             </div>
