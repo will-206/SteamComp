@@ -105,7 +105,7 @@ class Games extends Component {
                 <div key={game.id}>
                   <img src={game.data.header_image}
                   alt={game.data.name}/>
-                  <a>{game.data.name}</a>
+                  {/* <a>{game.data.name}</a> */}
                   <a> {game.owners.length}/{this.props.compareIds.length} </a>
                   {game.data.metacritic
                     ? <a href={game.data.metacritic.url}>Metacritic: {game.data.metacritic.score}/100</a>

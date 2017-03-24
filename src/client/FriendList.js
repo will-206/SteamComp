@@ -67,7 +67,9 @@ function FriendList(props) {
       <div>
         {friends[0] ?
           <div>
-          { friends.sort(sortTime).sort(sortStatus).map(friend => (
+          { friends.sort(sortTime)
+            .sort(sortStatus)
+            .map(friend => (
             <div key={friend.steamid}>
               {friend.communityvisibilitystate !== 3 ?
               <input

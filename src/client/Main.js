@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import FriendList from './FriendList';
 import Games from './Games';
+import Groups from './Groups';
 
 class Main extends Component {
   constructor(props) {
@@ -123,9 +124,7 @@ class Main extends Component {
       return Promise.all(gamesInfoPromises);
     })
     .then((games) => {
-      // console.log(games);
       this.setState({gamesArr:games})
-      console.log(this.state.friendsInfo);
     })
     .catch((err) => {
       console.log(err);
@@ -165,6 +164,7 @@ class Main extends Component {
       <div>
         <img src={this.state.userInfo.avatarmedium}></img>
         <a>{this.state.userInfo.personaname} </a>
+        <a>{}</a>
         <a
           href="api/logout"
           onClick={this.onLogOut}
@@ -175,6 +175,7 @@ class Main extends Component {
           compareIds={this.state.compareIds}
           onCheck={this.onCheckboxChange}
         />
+        <Groups />
         <Games
           userInfo={this.state.userInfo}
           friends={this.state.friendsInfo}
