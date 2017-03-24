@@ -8,58 +8,62 @@ class Games extends Component {
       size: 50,
       search: '',
       multiplayerOnly: false,
-      friendsObj: {}
+      platform: 'any'
     }
     this.orderBySimilar = this.orderBySimilar.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
     this.onCheck = this.onCheck.bind(this);
-    // this.idsToNames = this.idsToNames.bind(this);
+    this.onPlatformChange = this.onPlatformChange.bind(this);
   }
 
   orderBySimilar(a, b) {
-    let owners = b.owners.length - a.owners.length;
-    if (owners === 0){
+    let difference = b.owners.length - a.owners.length;
+    if (difference === 0){
       if(b.data.name < a.data.name){
-        owners++;
+        difference++;
       }
       else if (b.data.name > a.data.name){
-        owners--;
+        difference--;
       }
     }
-
-    return owners;
+    return difference;
   }
 
   updateSearch(event) {
     this.setState({search: event.target.value});
   }
 
-  onCheck(event){
+  onCheck(){
     this.setState({multiplayerOnly: !this.state.multiplayerOnly});
   }
 
-  // idsToNames(ids) {
-  //   console.log(this.state.friendsObj);
-  //   // for (let elem in ids) {
-  //   //   console.log(ids[elem]);
-  //   //   console.log(this.state.friendsObj.[ids[elem]]);
-  //   // }
-  // }
-
-  // componentDidMount() {
-  //   const friendsObj = this.props.friends.reduce((result, elem) => {
-  //     result[elem.steamid] = elem.personaname;
-  //     return result
-  //   }, {})
-  //   this.setState({friendsObj})
-  //   console.log(friendsObj);
-  //   // friendsObj[userInfo.steamid] = userInfo.personaname;
-  // }
+  onPlatformChange(event){
+    // console.log(event.target.value);
+    this.setState({platform: event.target.value});
+  }
 
   render() {
+    const friendsObj = this.props.friends.reduce((result, elem) => {
+      result[elem.steamid] = elem.personaname;
+      return result
+    }, {})
+    friendsObj[this.props.userInfo.steamid] = this.props.userInfo.personaname;
+
     let filteredResult = this.props.games
-    .filter((game)=> game.data)
+    .filter((game) => game.data)
     .filter((game) => {
+      //filter by platform
+      if (this.state.platform === 'any') {
+        return true;
+      }
+      return game.data.platforms[this.state.platform];
+    })
+    .filter((game) => {
+      //remove promotional games
+      if (game.data.type === 'advertising') {
+        return false;
+      }
+      //filter out games without multiplayer or co-op if checked
       if (!this.state.multiplayerOnly) {
         return true;
       }
@@ -73,6 +77,7 @@ class Games extends Component {
       return multiplayer;
     })
     .filter((game) => {
+      //filter by search
       return game.data.name.toLowerCase()
       .indexOf(this.state.search.toLowerCase()) !== -1;
     })
@@ -81,6 +86,7 @@ class Games extends Component {
     return (
       <div className="Games">
         <h2>Games</h2>
+
         <label>
           Search:
           <input type="text"
@@ -89,6 +95,7 @@ class Games extends Component {
             >
             </input>
         </label>
+
         <label>
           Muliplayer
           <input
@@ -99,6 +106,19 @@ class Games extends Component {
           />
         </label>
 
+        <label>
+          Platform
+          <select
+            name="platform"
+            onChange={this.onPlatformChange}
+          >
+            <option value="any">Any</option>
+            <option value="windows">Windows</option>
+            <option value="mac">Mac</option>
+            <option value="linux">Linux</option>
+          </select>
+        </label>
+
         <div>
           {filteredResult[0] ?
             <div>
@@ -106,16 +126,50 @@ class Games extends Component {
                 <div key={game.id}>
                   <img src={game.data.header_image}
                   alt={game.data.name}/>
-                  {/* <a>{game.data.name}</a> */}
-                  <a> {game.owners.length}/{this.props.compareIds.length} </a>
-                  {game.data.metacritic
-                    ? <a href={game.data.metacritic.url}>Metacritic: {game.data.metacritic.score}/100</a>
-                    : <a></a>
-                  }
-                  {/* <br />
-                  {game.owners.map(owner => (
-                    <a key={game.owner}>{game.owner}</a>
-                  ))} */}
+                  <br />
+                  <div className="onHover">
+                    <a> {game.owners.length}/{this.props.compareIds.length} </a>
+                    <a
+                      href={`http://store.steampowered.com/app/${game.data.steam_appid}/`}>
+                      {game.data.name}
+                    </a>
+                    {game.data.is_free
+                      ? <a>Free</a>
+                      : <div>{game.data.price_overview
+                        ? <a>${game.data.price_overview.final/100}</a>
+                        : <a></a>
+                      }</div>
+                    }
+
+                    {game.data.metacritic
+                      ? <a href={game.data.metacritic.url}>Metacritic: {game.data.metacritic.score}/100</a>
+                      : <a></a>
+                    }
+                    <div id="platforms">
+                      {game.data.platforms.windows
+                        ? <a>W</a> : <a></a>}
+                      {game.data.platforms.mac
+                        ? <a>M</a> : <a></a>}
+                      {game.data.platforms.linux
+                        ? <a>L</a> : <a></a>}
+                    </div>
+                    <br />
+                    {this.props.compareIds.map(id => (
+                      <div key={id}>
+                        {!game.owners.includes(id) ?
+                          <div>
+                            - {friendsObj[id]}
+                          </div>
+                          :<div></div>
+                        }
+                      </div>
+                    ))}
+                    {game.owners.map(owner => (
+                      <div key={owner}>
+                        + {friendsObj[owner]}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
