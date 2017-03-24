@@ -59,6 +59,7 @@ function FriendList(props) {
               <img src={friend.avatar}></img>
               <a href={friend.profileurl}>{friend.personaname}</a>
               <a> {formatPersonaState(friend.personastate, friend.lastlogoff)}</a>
+              {/* <a>{friend.steamid}</a> */}
             </div>
           ))
           }

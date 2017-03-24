@@ -10,6 +10,7 @@ class Games extends Component {
       multiplayerOnly: false,
       platform: 'any'
     }
+
     this.orderBySimilar = this.orderBySimilar.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
     this.onCheck = this.onCheck.bind(this);
@@ -38,7 +39,6 @@ class Games extends Component {
   }
 
   onPlatformChange(event){
-    // console.log(event.target.value);
     this.setState({platform: event.target.value});
   }
 
@@ -92,8 +92,8 @@ class Games extends Component {
           <input type="text"
             value={this.state.search}
             onChange={this.updateSearch}
-            >
-            </input>
+          >
+          </input>
         </label>
 
         <label>
@@ -133,6 +133,7 @@ class Games extends Component {
                       href={`http://store.steampowered.com/app/${game.data.steam_appid}/`}>
                       {game.data.name}
                     </a>
+                    <br/>
                     {game.data.is_free
                       ? <a>Free</a>
                       : <div>{game.data.price_overview

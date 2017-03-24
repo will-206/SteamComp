@@ -15,8 +15,6 @@ class Main extends Component {
       compareIds: [],
       gamesObj: {},
       gamesArr: []
-      // ,
-      // orderedResult: []
     }
 
     this.onCheckboxChange = this.onCheckboxChange.bind(this);
