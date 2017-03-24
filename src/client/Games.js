@@ -73,7 +73,8 @@ class Games extends Component {
       return multiplayer;
     })
     .filter((game) => {
-      return game.data.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+      return game.data.name.toLowerCase()
+      .indexOf(this.state.search.toLowerCase()) !== -1;
     })
     .sort(this.orderBySimilar);
 

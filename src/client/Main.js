@@ -14,12 +14,21 @@ class Main extends Component {
       friendsInfo: [],
       compareIds: [],
       gamesObj: {},
-      gamesArr: [],
-      orderedResult: []
+      gamesArr: []
+      // ,
+      // orderedResult: []
     }
 
     this.onCheckboxChange = this.onCheckboxChange.bind(this);
+    this.onClearAll = this.onClearAll.bind(this);
+    this.onSelectAll = this.onSelectAll.bind(this);
     this.onLogOut = this.onLogOut.bind(this);
+    this.formatPersonaState = this.formatPersonaState.bind(this);
+  }
+
+  componentDidMount() {
+    this.getUserInfo();
+    this.getFriendsList();
   }
 
   getUserInfo() {
@@ -65,11 +74,6 @@ class Main extends Component {
     })
   }
 
-  componentDidMount() {
-    this.getUserInfo();
-    this.getFriendsList();
-  }
-
   onCheckboxChange(event) {
     this.setState({gamesArr:[]});
     const friendId = event.target.value
@@ -81,21 +85,38 @@ class Main extends Component {
     } else {
       compareIds.push(friendId)
     }
-    this.setState({compareIds})
+    // this.setState({compareIds})
     localStorage.setItem('compareIds', compareIds);
     this.compareGames();
   }
 
-  compareGames() {
+  onClearAll() {
+    localStorage.removeItem('compareIds');
     this.setState({
-      compareIds: localStorage.getItem('compareIds').split(',') || []
-    })
-    const compareIds = this.state.compareIds;
-    const orderedResult = [];
+      compareIds: [this.state.userInfo.steamid],
+      gamesArr: []
+    });
+  }
 
-    for (let elem in compareIds) {
-      orderedResult.push([]);
+  onSelectAll() {
+    console.log('select all');
+    this.setState({
+      compareIds: [this.state.friendsIds]
+    });
+    localStorage.setItem('compareIds', [this.state.friendsIds]);
+    this.compareGames();
+  }
+
+  compareGames() {
+    console.log('comparing');
+    if (localStorage.getItem('compareIds')){
+      this.setState({
+        compareIds: localStorage.getItem('compareIds').split(',')
+      })
     }
+    const compareIds = this.state.compareIds;
+    console.log(compareIds);
+    // console.log(localStorage.getItem('compareIds'));
 
     const promises = compareIds.map((elem) => {
       return axios.get(`/games?ID=${elem}`)
@@ -117,7 +138,9 @@ class Main extends Component {
       function atLeastOne(elem){
         return gamesObj[elem].owners.length > 1;
       }
-      const gamesInfoPromises = Object.keys(gamesObj).filter(atLeastOne).map(ele => {
+      const gamesInfoPromises = Object.keys(gamesObj)
+      .filter(atLeastOne)
+      .map(ele => {
         return this.getGameInfo(ele, gamesObj[ele].owners);
       })
 
@@ -159,12 +182,53 @@ class Main extends Component {
     localStorage.clear();
   }
 
+  formatPersonaState(state, lastOnline) {
+    switch(state) {
+      case 0: return `Last Online: ${this.formatLastOnline(lastOnline)} ago`;
+      case 1: return "Online";
+      case 2: return "Busy";
+      case 3: return "Away";
+      case 4: return "Snooze";
+      case 5: return "Looking to Trade";
+      case 6: return "Looking to Play";
+    }
+  }
+
+  formatLastOnline(lastOnline) {
+    const secondsAgo = Math.round(new Date().getTime() / 1000) - lastOnline;
+    const minutesAgo = Math.floor(secondsAgo/60);
+    const hoursAgo = Math.floor(minutesAgo/60);
+    const daysAgo = Math.floor(hoursAgo/24);
+    const monthsAgo = Math.floor(daysAgo/30);
+
+    let str = '';
+    if (monthsAgo >= 1) {
+      str = monthsAgo + ' months';
+    }
+    else if (daysAgo >= 1) {
+      str = daysAgo + ' days';
+    }
+    else if (hoursAgo >= 1) {
+      str = hoursAgo + ' hours';
+    }
+    else if (minutesAgo >= 1) {
+      str = minutesAgo + ' minutes';
+    }
+    else {
+      str = secondsAgo + ' seconds';
+    }
+    if (str.slice(0,2) === '1 ') {
+      str = str.slice(0, -1);
+    }
+    return str;
+  }
+
   render() {
     return (
       <div>
         <img src={this.state.userInfo.avatarmedium}></img>
         <a>{this.state.userInfo.personaname} </a>
-        <a>{}</a>
+        <a>{this.formatPersonaState(this.state.userInfo.personastate, this.state.userInfo.lastlogoff)}</a>
         <a
           href="api/logout"
           onClick={this.onLogOut}
@@ -174,6 +238,10 @@ class Main extends Component {
           friends={this.state.friendsInfo}
           compareIds={this.state.compareIds}
           onCheck={this.onCheckboxChange}
+          onClearAll={this.onClearAll}
+          onSelectAll={this.onSelectAll}
+          formatPersonaState={this.formatPersonaState}
+          formatLastOnline={this.formatLastOnline}
         />
         <Groups />
         <Games
