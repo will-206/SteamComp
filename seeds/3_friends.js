@@ -6,11 +6,11 @@ exports.seed = function(knex) {
       return knex('friends').insert([{
         id: 1,
         steam_userid: 76561198060677362
-        //no items
+        //noitems
       }, {
         id: 2,
         steam_userid: 76561198052658466
-        //fox only
+        //foxonly
       }, {
         id: 3,
         steam_userid: 76561198030826265

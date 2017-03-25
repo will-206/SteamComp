@@ -32,13 +32,13 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new SteamStrategy({
-    // returnURL: `https://steamcomp.herokuapp.com/api/auth/steam/return`,
-    // realm: `https://steamcomp.herokuapp.com/`,
-    // apiKey: process.env.STEAM_API_KEY
-    
-    returnURL: `http://localhost:${WEB_PORT}/api/auth/steam/return`,
-    realm: `http://localhost:${WEB_PORT}/`,
+    returnURL: `https://steamcomp.herokuapp.com/api/auth/steam/return`,
+    realm: `https://steamcomp.herokuapp.com/`,
     apiKey: process.env.STEAM_API_KEY
+
+    // returnURL: `http://localhost:${WEB_PORT}/api/auth/steam/return`,
+    // realm: `http://localhost:${WEB_PORT}/`,
+    // apiKey: process.env.STEAM_API_KEY
   },
   function(identifier, profile, done) {
     process.nextTick(function () {

@@ -5,7 +5,6 @@ class Games extends Component {
     super(props)
 
     this.state = {
-      size: 50,
       search: '',
       multiplayerOnly: false,
       platform: 'any'

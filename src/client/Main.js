@@ -180,18 +180,6 @@ class Main extends Component {
     localStorage.clear();
   }
 
-  formatPersonaState(state, lastOnline) {
-    switch(state) {
-      case 0: return `Last Online: ${this.formatLastOnline(lastOnline)} ago`;
-      case 1: return "Online";
-      case 2: return "Busy";
-      case 3: return "Away";
-      case 4: return "Snooze";
-      case 5: return "Looking to Trade";
-      case 6: return "Looking to Play";
-    }
-  }
-
   formatLastOnline(lastOnline) {
     const secondsAgo = Math.round(new Date().getTime() / 1000) - lastOnline;
     const minutesAgo = Math.floor(secondsAgo/60);
@@ -219,6 +207,18 @@ class Main extends Component {
       str = str.slice(0, -1);
     }
     return str;
+  }
+
+  formatPersonaState(state, lastOnline) {
+    switch(state) {
+      case 0: return `Last Online: ${this.formatLastOnline(lastOnline)} ago`;
+      case 1: return "Online";
+      case 2: return "Busy";
+      case 3: return "Away";
+      case 4: return "Snooze";
+      case 5: return "Looking to Trade";
+      case 6: return "Looking to Play";
+    }
   }
 
   render() {
