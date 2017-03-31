@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Game from './Game';
+
 
 class Games extends Component {
   constructor(props) {
@@ -7,13 +9,15 @@ class Games extends Component {
     this.state = {
       search: '',
       multiplayerOnly: false,
-      platform: 'any'
+      platform: 'any',
     }
 
     this.orderBySimilar = this.orderBySimilar.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
     this.onCheck = this.onCheck.bind(this);
     this.onPlatformChange = this.onPlatformChange.bind(this);
+    // this.onHover = this.onHover.bind(this);
+
   }
 
   orderBySimilar(a, b) {
@@ -40,6 +44,12 @@ class Games extends Component {
   onPlatformChange(event){
     this.setState({platform: event.target.value});
   }
+
+  // onHover(event){
+  //   console.log(event);
+  //   console.log(event.target.value);
+  //   // this.setState({openPanel: game.id});
+  // }
 
   render() {
     const friendsObj = this.props.friends.reduce((result, elem) => {
@@ -87,7 +97,7 @@ class Games extends Component {
         <h2>Games</h2>
 
         <label>
-          Search:
+          <span className="glyphicon glyphicon-search"></span>
           <input type="text"
             value={this.state.search}
             onChange={this.updateSearch}
@@ -118,62 +128,26 @@ class Games extends Component {
           </select>
         </label>
 
-        <div>
+        <div id="gamesList">
           {filteredResult[0] ?
             <div>
               {filteredResult.map(game => (
-                <div key={game.id}>
-                  <img src={game.data.header_image}
-                  alt={game.data.name}/>
-                  <br />
-                  <div className="onHover">
-                    <a> {game.owners.length}/{this.props.compareIds.length} </a>
-                    <a
-                      href={`http://store.steampowered.com/app/${game.data.steam_appid}/`}>
-                      {game.data.name}
-                    </a>
-                    <br/>
-                    {game.data.is_free
-                      ? <a>Free</a>
-                      : <div>{game.data.price_overview
-                        ? <a>${game.data.price_overview.final/100}</a>
-                        : <a></a>
-                      }</div>
-                    }
-
-                    {game.data.metacritic
-                      ? <a href={game.data.metacritic.url}>Metacritic: {game.data.metacritic.score}/100</a>
-                      : <a></a>
-                    }
-                    <div id="platforms">
-                      {game.data.platforms.windows
-                        ? <a>W</a> : <a></a>}
-                      {game.data.platforms.mac
-                        ? <a>M</a> : <a></a>}
-                      {game.data.platforms.linux
-                        ? <a>L</a> : <a></a>}
-                    </div>
-                    <br />
-                    {this.props.compareIds.map(id => (
-                      <div key={id}>
-                        {!game.owners.includes(id) ?
-                          <div>
-                            - {friendsObj[id]}
-                          </div>
-                          :<div></div>
-                        }
-                      </div>
-                    ))}
-                    {game.owners.map(owner => (
-                      <div key={owner}>
-                        + {friendsObj[owner]}
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <Game
+                  friendsObj={friendsObj}
+                  game={game}
+                  compareIds={this.props.compareIds}
+                  key={game.id}
+                />
               ))}
             </div>
-            : this.props.compareIds.length > 1 ? 'loading...' : 'Select at least one friend to compare games with'
+            : this.props.compareIds.length > 1 ?
+              this.props.games.length > 0 ?
+                <div>0 Results</div>
+              :<div>
+                <i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                <span className="sr-only">Loading...</span>
+              </div>
+            : 'Select at least one friend to compare games with'
           }
         </div>
       </div>

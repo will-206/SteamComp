@@ -3,6 +3,8 @@ const request = require('request');
 
 router.get('/userInfo', (req, res, next) => {
   console.log('requested userinfo');
+  console.log(req.session.cookie);
+
   const user = req.query.ID;
   request(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_API_KEY}&steamids=${user}`, (error, response, body) => {
     if (error) {

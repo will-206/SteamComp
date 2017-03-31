@@ -6,6 +6,69 @@ body {
   font-family: sans-serif;
 }
 
-h1 {
-  color: limegreen;
+label {
+  color: #B0AEAE;
+}
+
+input {
+  background-color: #292A2E;
+  color: #B0AEAE;
+  border: none;
+  padding: 7px;
+}
+input.form-control,input.form-control:focus {
+    border:none;
+    box-shadow: none;
+   -webkit-box-shadow: none;
+   -moz-box-shadow: none;
+   -moz-transition: none;
+   -webkit-transition: none;
+}
+input:focus {
+  outline: none;
+  border: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+select {
+  background-color: #292A2E;
+  border: none;
+}
+
+button {
+  background-color: #333;
+  color: #B0AEAE;
+  border: none;
+}
+
+button:hover {
+  color: white;
+}
+
+.ownerFraction {
+  /*width: 50px;*/
+  margin-left: 5px;
+  font-size: 30px;
+}
+
+.gameInfo {
+  width: 460px;
+  padding: 10px;
+  background-color: #292A2E;
+}
+.owner {
+  color: white;
+}
+.nonOwner {
+  color: grey;
+  text-decoration: line-through;
+}
+
+.glyphicon {
+  margin-right: 5px;
+}
+
+.fa {
+  margin-right: 5px;
 }

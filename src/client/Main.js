@@ -3,6 +3,8 @@ import axios from 'axios';
 import FriendList from './FriendList';
 import Games from './Games';
 import Groups from './Groups';
+import { Grid, Row, Col } from 'react-bootstrap';
+
 
 class Main extends Component {
   constructor(props) {
@@ -225,29 +227,37 @@ class Main extends Component {
     return (
       <div>
         <img src={this.state.userInfo.avatarmedium}></img>
-        <a>{this.state.userInfo.personaname} </a>
+        <a href={this.state.userInfo.profileurl}>{this.state.userInfo.personaname} </a>
         <a>{this.formatPersonaState(this.state.userInfo.personastate, this.state.userInfo.lastlogoff)}</a>
         <a
           href="api/logout"
-          onClick={this.onLogOut}
+          onClick={ this.onLogOut}
         >Logout</a>
 
-        <FriendList
-          friends={this.state.friendsInfo}
-          compareIds={this.state.compareIds}
-          onCheck={this.onCheckboxChange}
-          onClearAll={this.onClearAll}
-          onSelectAll={this.onSelectAll}
-          formatPersonaState={this.formatPersonaState}
-          formatLastOnline={this.formatLastOnline}
-        />
-        <Groups />
-        <Games
-          userInfo={this.state.userInfo}
-          friends={this.state.friendsInfo}
-          compareIds={this.state.compareIds}
-          games={this.state.gamesArr}
-        />
+        <Grid>
+          <Row>
+            <Col xs={4}>
+              <FriendList
+                friends={this.state.friendsInfo}
+                compareIds={this.state.compareIds}
+                onCheck={this.onCheckboxChange}
+                onClearAll={this.onClearAll}
+                onSelectAll={this.onSelectAll}
+                formatPersonaState={this.formatPersonaState}
+                formatLastOnline={this.formatLastOnline}
+              />
+              <Groups />
+            </Col>
+            <Col xs={8}>
+              <Games
+                userInfo={this.state.userInfo}
+                friends={this.state.friendsInfo}
+                compareIds={this.state.compareIds}
+                games={this.state.gamesArr}
+              />
+            </Col>
+          </Row>
+        </Grid>
       </div>
     );
   }

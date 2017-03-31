@@ -20,6 +20,8 @@ class Groups extends Component {
         </input>
 
         <button>+ Create Group</button>
+
+
       </div>
     );
   }

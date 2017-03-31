@@ -6,7 +6,10 @@ function renderApp(title) {
     <html>
       <head>
         <title>${title}</title>
-        <link rel="stylesheet" href="${STATIC_PATH}/css/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+        <link rel="stylesheet" href="${STATIC_PATH}/css/styles.css">
+        <script src="https://use.fontawesome.com/118cccce43.js"></script>
+
       </head>
       <body>
         <div class="${APP_CONTAINER_CLASS}"></div>

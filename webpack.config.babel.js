@@ -15,6 +15,9 @@ export default {
     publicPath: `http://localhost:${WDS_PORT}/dist/js/`,
   },
   module: {
+    // loaders: [
+    //   { test: /\.(png)$/, loader: 'url-loader' }
+    // ],
     rules: [
       { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ },
     ],

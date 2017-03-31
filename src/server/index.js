@@ -24,33 +24,34 @@ app.use(STATIC_PATH, express.static('dist'));
 app.use(STATIC_PATH, express.static('public'));
 
 passport.serializeUser(function(user, done) {
+  // console.log(user);
   done(null, user);
 });
 
 passport.deserializeUser(function(obj, done) {
+  // console.log(obj)
   done(null, obj);
 });
 
 passport.use(new SteamStrategy({
-    returnURL: `https://steamcomp.herokuapp.com/api/auth/steam/return`,
-    realm: `https://steamcomp.herokuapp.com/`,
-    apiKey: process.env.STEAM_API_KEY
-
-    // returnURL: `http://localhost:${WEB_PORT}/api/auth/steam/return`,
-    // realm: `http://localhost:${WEB_PORT}/`,
+    // returnURL: `https://steamcomp.herokuapp.com/api/auth/steam/return`,
+    // realm: `https://steamcomp.herokuapp.com/`,
     // apiKey: process.env.STEAM_API_KEY
+
+    returnURL: `http://localhost:${WEB_PORT}/api/auth/steam/return`,
+    realm: `http://localhost:${WEB_PORT}/`,
+    apiKey: process.env.STEAM_API_KEY
   },
   function(identifier, profile, done) {
-    process.nextTick(function () {
-      profile.identifier = identifier;
-      return done(null, profile);
-    });
+    profile.identifier = identifier;
+    console.log(profile);
+    done(null, profile);
   }
 ));
 
 app.use(session({
     secret: 'your secret',
-    name: 'name of session id',
+    name: 'session',
     resave: true,
     saveUninitialized: true}));
 
@@ -59,8 +60,10 @@ app.use(passport.session());
 app.use(express.static(__dirname + '/../../public'));
 
 app.use(require('./routes/userInfo'));
+app.use(require('./routes/groups'));
 
 //steam api
+
 app.get('/main/api/logout', function(req, res){
   req.logout();
   res.redirect('/login');
