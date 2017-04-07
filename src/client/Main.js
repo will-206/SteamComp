@@ -4,6 +4,8 @@ import FriendList from './FriendList';
 import Games from './Games';
 import Groups from './Groups';
 import { Grid, Row, Col } from 'react-bootstrap';
+import { browserHistory } from 'react-router';
+
 
 
 class Main extends Component {
@@ -33,13 +35,17 @@ class Main extends Component {
 
   getUserInfo() {
     const self = this;
+    console.log(this.props.params.userId)
     axios.get(`/userInfo?ID=${this.props.params.userId}`)
     .then((res) => {
+      console.log(res);
       self.setState({userInfo: res.data.response.players[0]})
       self.setState({compareIds: [this.state.userInfo.steamid]})
       self.compareGames();
     })
     .catch((err) => {
+      // if not auth, redirect
+      browserHistory.push('/login');
       console.log(err);
     })
   }
@@ -226,13 +232,16 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <img src={this.state.userInfo.avatarmedium}></img>
-        <a href={this.state.userInfo.profileurl}>{this.state.userInfo.personaname} </a>
-        <a>{this.formatPersonaState(this.state.userInfo.personastate, this.state.userInfo.lastlogoff)}</a>
-        <a
-          href="api/logout"
-          onClick={ this.onLogOut}
-        >Logout</a>
+        <div className={`onlineState${this.state.userInfo.personastate}`}>
+
+          <img src={this.state.userInfo.avatarmedium} className="avatar"></img>
+          <a href={this.state.userInfo.profileurl}>{this.state.userInfo.personaname} </a>
+          <p>{this.formatPersonaState(this.state.userInfo.personastate, this.state.userInfo.lastlogoff)}</p>
+          <button
+            href="api/logout"
+            onClick={ this.onLogOut}
+          >Logout</button>
+        </div>
 
         <Grid>
           <Row>

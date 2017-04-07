@@ -1,6 +1,7 @@
 body {
   color: white;
-  background-color: #333;
+  /*background-color: #333;*/
+  background-color: #1B1B1B;
   width: 960px;
   margin: auto;
   font-family: sans-serif;
@@ -16,7 +17,7 @@ input {
   border: none;
   padding: 7px;
 }
-input.form-control,input.form-control:focus {
+input.form-control,input.form-control:focus,button.form-control,button.form-control:focus,select.form-control,select.form-control:focus {
     border:none;
     box-shadow: none;
    -webkit-box-shadow: none;
@@ -24,7 +25,7 @@ input.form-control,input.form-control:focus {
    -moz-transition: none;
    -webkit-transition: none;
 }
-input:focus {
+input:focus,button:focus,select:focus {
   outline: none;
   border: none !important;
   -webkit-box-shadow: none !important;
@@ -37,7 +38,8 @@ select {
 }
 
 button {
-  background-color: #333;
+  /*background-color: #333;*/
+  background-color: #1B1B1B;
   color: #B0AEAE;
   border: none;
 }
@@ -45,6 +47,31 @@ button {
 button:hover {
   color: white;
 }
+
+button:active {
+  position: relative;
+  top: 1px;
+}
+
+a, p {
+  color: #57CBDE;
+}
+
+.avatar  {
+  border: 2px solid #57CBDE;
+}
+
+.onlineState0 a, .onlineState0 p {
+  color: #898989;
+}
+
+.onlineState0 img {
+  border: 2px solid #898989;
+}
+
+/*.onlineState1,.onlineState3 a {
+  color: #57CBDE;
+}*/
 
 .ownerFraction {
   /*width: 50px;*/
@@ -56,6 +83,11 @@ button:hover {
   width: 460px;
   padding: 10px;
   background-color: #292A2E;
+}
+
+.metaScore {
+  position: relative;
+  left: 100px;
 }
 .owner {
   color: white;

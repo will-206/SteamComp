@@ -17,7 +17,6 @@ class Game extends React.Component {
         onMouseLeave={()=> this.setState({ hover: false })}
       >
         <img src={game.data.header_image} alt={game.data.name}
-        // style={width: '100px'}
         />
         <a className="ownerFraction">
           {game.owners.length}/{compareIds.length}
@@ -31,10 +30,10 @@ class Game extends React.Component {
             {game.data.name}
           </a>
           {game.data.is_free
-            ? <a>Free</a>
+            ? <div><p>Free</p></div>
             : <div>{game.data.price_overview
-              ? <a>${game.data.price_overview.final/100}</a>
-              : <a></a>
+              ? <p>${game.data.price_overview.final/100}</p>
+              : <p></p>
             }</div>
           }
 
@@ -52,7 +51,7 @@ class Game extends React.Component {
                 : <i></i>}
           </div>
           {game.data.metacritic
-            ? <a href={game.data.metacritic.url}>Metacritic: {game.data.metacritic.score}/100</a>
+            ? <a className="metaScore" href={game.data.metacritic.url}>Metacritic: {game.data.metacritic.score}/100</a>
             : <a></a>
           }
           <br />

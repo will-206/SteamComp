@@ -44,16 +44,17 @@ passport.use(new SteamStrategy({
   },
   function(identifier, profile, done) {
     profile.identifier = identifier;
-    console.log(profile);
+    // console.log(done);
     done(null, profile);
   }
 ));
 
 app.use(session({
     secret: 'your secret',
-    name: 'session',
-    resave: true,
-    saveUninitialized: true}));
+    name: 'session'
+    // ,resave: true,
+    // saveUninitialized: false
+  }));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -62,7 +63,7 @@ app.use(express.static(__dirname + '/../../public'));
 app.use(require('./routes/userInfo'));
 app.use(require('./routes/groups'));
 
-//steam api
+//steam apin
 
 app.get('/main/api/logout', function(req, res){
   req.logout();
@@ -76,9 +77,9 @@ app.get('/api/auth/steam',
 app.get('/api/auth/steam/return',
   passport.authenticate('steam', { failureRedirect: '/login' }),
   function(req, res) {
-    console.log(req.user);
-    console.log(req.user._json.steamid);
-    console.log(req.user.id);
+    // console.log(req.user);
+    // console.log(req.user._json.steamid);
+    // console.log(req.user.id);
 
     res.redirect('/main/' + req.user.id);
   });

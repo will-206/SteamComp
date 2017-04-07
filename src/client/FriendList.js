@@ -67,7 +67,7 @@ class FriendList extends Component {
               .sort(sortTime)
               .sort(sortStatus)
               .map(friend => (
-              <div key={friend.steamid}>
+              <div key={friend.steamid} className={`onlineState${friend.personastate}`}>
                 {/* <a>{friend.communityvisibilitystate}</a> */}
                 {friend.communityvisibilitystate !== 3 ?
                 <input
@@ -88,14 +88,15 @@ class FriendList extends Component {
                   checked={compareIds.includes(friend.steamid)}
                 />
                 }
-                <img src={friend.avatar}></img>
+                <img src={friend.avatar} className="avatar"></img>
                 <a href={friend.profileurl}>{friend.personaname}</a>
-                <a> {formatPersonaState(friend.personastate, friend.lastlogoff)}</a>
+                <p> {formatPersonaState(friend.personastate, friend.lastlogoff)}</p>
                 {/* <a>{friend.steamid}</a> */}
               </div>
             ))
             }
-          </div> : friends.length > 0 ?
+          </div>
+          : friends.length > 0 ?
             <div>0 Results</div>
           :<div>
             <i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>

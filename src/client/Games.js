@@ -94,7 +94,7 @@ class Games extends Component {
 
     return (
       <div className="Games">
-        <h2>Games</h2>
+        <h2>Shared Games</h2>
 
         <label>
           <span className="glyphicon glyphicon-search"></span>

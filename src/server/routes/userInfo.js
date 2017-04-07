@@ -1,12 +1,19 @@
 const router = require('express').Router();
 const request = require('request');
+const passport = require('passport');
 
-router.get('/userInfo', (req, res, next) => {
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.status(403).send({authenticated:false});
+}
+
+router.get('/userInfo', ensureAuthenticated, (req, res, next) => {
   console.log('requested userinfo');
-  console.log(req.session.cookie);
 
   const user = req.query.ID;
   request(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_API_KEY}&steamids=${user}`, (error, response, body) => {
+    console.log(body)
+
     if (error) {
       res.send(error)
     }
@@ -19,7 +26,8 @@ router.get('/userFriends', (req, res, next) => {
   const user = req.query.ID;
   request(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${user}&relationship=friend`, (error, response, body) => {
     if (error) {
-      res.send(error)
+      res.sendStatus(500);
+      res.send(err);
     }
     res.send(body);
   });
