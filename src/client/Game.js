@@ -45,7 +45,7 @@ class Game extends React.Component {
           {game.data.is_free
             ? <div><p>Free</p></div>
             : <div>{game.data.price_overview
-              ? <p>${game.data.price_overview.final/100}</p>
+              ? <p>${(game.data.price_overview.final/100).toFixed(2)}</p>
               : <p></p>
             }</div>
           }
