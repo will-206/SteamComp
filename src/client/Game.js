@@ -8,7 +8,20 @@ class Game extends React.Component {
     this.state = {
       hover: false
     };
+
+    this.getMetaCriticClass = this.getMetaCriticClass.bind(this);
   }
+
+  getMetaCriticClass(n) {
+    n = parseInt(n);
+    if (n < 50) {
+      return 'negative';
+    } else if (n < 75) {
+      return 'mixed';
+    }
+    return 'positive';
+  }
+
   render() {
     const { game, compareIds, friendsObj } = this.props;
     return (
@@ -51,7 +64,7 @@ class Game extends React.Component {
                 : <i></i>}
           </div>
           {game.data.metacritic
-            ? <a className="metaScore" href={game.data.metacritic.url}>Metacritic: {game.data.metacritic.score}/100</a>
+            ? <a className={"metaScore " + this.getMetaCriticClass(game.data.metacritic.score)} href={game.data.metacritic.url}> <p>{game.data.metacritic.score}</p></a>
             : <a></a>
           }
           <br />

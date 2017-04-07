@@ -1,6 +1,5 @@
 body {
   color: white;
-  /*background-color: #333;*/
   background-color: #1B1B1B;
   width: 960px;
   margin: auto;
@@ -80,15 +79,39 @@ a, p {
 }
 
 .gameInfo {
+  position: relative;
   width: 460px;
   padding: 10px;
   background-color: #292A2E;
 }
 
 .metaScore {
-  position: relative;
-  left: 100px;
+  display: block;
+  position: absolute;
+  left: 400px;
+  top: 10px;
+  height: 50px;
+  width: 50px;
 }
+
+.positive {
+  background-color: #66CC33;
+}
+.mixed {
+  background-color: #FFCC33;
+}
+.negative {
+  background-color: #FF0000;
+}
+
+.metaScore p {
+  font-family: Helvetica,Arial,sans-serif;
+  color: white;
+  font-size: 25px;
+  text-align: center;
+  line-height: 50px;
+}
+
 .owner {
   color: white;
 }
