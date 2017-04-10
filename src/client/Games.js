@@ -12,7 +12,7 @@ class Games extends Component {
       platform: 'any',
     }
 
-    this.orderBySimilar = this.orderBySimilar.bind(this);
+    this.orderByShared = this.orderByShared.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
     this.onCheck = this.onCheck.bind(this);
     this.onPlatformChange = this.onPlatformChange.bind(this);
@@ -20,7 +20,7 @@ class Games extends Component {
 
   }
 
-  orderBySimilar(a, b) {
+  orderByShared(a, b) {
     let difference = b.owners.length - a.owners.length;
     if (difference === 0){
       if(b.data.name < a.data.name){
@@ -90,7 +90,7 @@ class Games extends Component {
       return game.data.name.toLowerCase()
       .indexOf(this.state.search.toLowerCase()) !== -1;
     })
-    .sort(this.orderBySimilar);
+    .sort(this.orderByShared);
 
     return (
       <div className="Games">
@@ -143,10 +143,7 @@ class Games extends Component {
             : this.props.compareIds.length > 1 ?
               this.props.games.length > 0 ?
                 <div>0 Results</div>
-              :<div>
-                <i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-                <span className="sr-only">Loading...</span>
-              </div>
+              :<i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
             : 'Select at least one friend to compare games with'
           }
         </div>

@@ -6,8 +6,6 @@ import Groups from './Groups';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 
-
-
 class Main extends Component {
   constructor(props) {
     super(props)
@@ -35,10 +33,8 @@ class Main extends Component {
 
   getUserInfo() {
     const self = this;
-    console.log(this.props.params.userId)
     axios.get(`/userInfo?ID=${this.props.params.userId}`)
     .then((res) => {
-      console.log(res);
       self.setState({userInfo: res.data.response.players[0]})
       self.setState({compareIds: [this.state.userInfo.steamid]})
       self.compareGames();
@@ -105,7 +101,6 @@ class Main extends Component {
   }
 
   onSelectAll() {
-    console.log('select all');
     this.setState({
       compareIds: [this.state.friendsIds]
     });
@@ -114,15 +109,12 @@ class Main extends Component {
   }
 
   compareGames() {
-    console.log('comparing');
     if (localStorage.getItem('compareIds')){
       this.setState({
         compareIds: localStorage.getItem('compareIds').split(',')
       })
     }
     const compareIds = this.state.compareIds;
-    console.log(compareIds);
-    // console.log(localStorage.getItem('compareIds'));
 
     const promises = compareIds.map((elem) => {
       return axios.get(`/games?ID=${elem}`)
@@ -173,7 +165,6 @@ class Main extends Component {
         });
       }).
       catch((err) => {
-        console.log(err, id);
         resolve({
           id:id,
           owners:owners,
@@ -232,16 +223,19 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <div className={`onlineState${this.state.userInfo.personastate}`}>
-
-          <img src={this.state.userInfo.avatarmedium} className="avatar"></img>
-          <a href={this.state.userInfo.profileurl}>{this.state.userInfo.personaname} </a>
-          <p>{this.formatPersonaState(this.state.userInfo.personastate, this.state.userInfo.lastlogoff)}</p>
-          <button
-            href="api/logout"
-            onClick={ this.onLogOut}
-          >Logout</button>
-        </div>
+        {this.state.userInfo.personastate ?
+          <div className={`onlineState${this.state.userInfo.personastate}`}>
+            <img src={this.state.userInfo.avatarmedium} className="avatar"></img>
+            <a href={this.state.userInfo.profileurl}>{this.state.userInfo.personaname} </a>
+            <p>{this.formatPersonaState(this.state.userInfo.personastate, this.state.userInfo.lastlogoff)}</p>
+            <a
+              href="api/logout"
+              onClick={this.onLogOut}
+            >Logout</a>
+          </div>
+          :
+          <i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        }
 
         <Grid>
           <Row>
@@ -253,7 +247,6 @@ class Main extends Component {
                 onClearAll={this.onClearAll}
                 onSelectAll={this.onSelectAll}
                 formatPersonaState={this.formatPersonaState}
-                formatLastOnline={this.formatLastOnline}
               />
               <Groups />
             </Col>

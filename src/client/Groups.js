@@ -6,6 +6,13 @@ class Groups extends Component {
 
     this.state = {
     }
+
+    this.handleCreateGroup = this.handleCreateGroup.bind(this)
+  }
+
+
+  handleCreateGroup() {
+    console.log('create group');
   }
 
   render() {
@@ -19,8 +26,9 @@ class Groups extends Component {
           >
         </input>
 
-        <button>+ Create Group</button>
-
+        <button onClick={this.handleCreateGroup}>
+          + Create Group
+        </button>
 
       </div>
     );
