@@ -14,7 +14,6 @@ class Groups extends Component {
 
     this.handleCreateGroup = this.handleCreateGroup.bind(this);
     this.updateNewGroupName = this.updateNewGroupName.bind(this);
-    this.onGroupSelect = this.onGroupSelect.bind(this);
   }
 
   componentDidMount() {
@@ -82,10 +81,7 @@ class Groups extends Component {
     });
   }
 
-  onGroupSelect(event) {
-    console.log('click');
-    console.log(event.target.name);
-  }
+
 
   render() {
     return (
@@ -105,7 +101,7 @@ class Groups extends Component {
           <div>
             {this.state.groups.map(group => (
               <div className="group" key={group.id}>
-                <button name={group.group_name} onClick={this.onGroupSelect} >{group.group_name}</button>
+                <button name={group.group_name} onClick={this.props.onGroupSelect} >{group.group_name}</button>
                 <DropdownButton className="bsButton"
                   bsSize="small" title="" id="sm-nested-dropdown">
                   <MenuItem className="bsMenuItem" eventKey="1">

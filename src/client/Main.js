@@ -24,6 +24,7 @@ class Main extends Component {
     this.onSelectAll = this.onSelectAll.bind(this);
     this.onLogOut = this.onLogOut.bind(this);
     this.formatPersonaState = this.formatPersonaState.bind(this);
+    this.onGroupSelect = this.onGroupSelect.bind(this);
   }
 
   componentDidMount() {
@@ -87,7 +88,6 @@ class Main extends Component {
     } else {
       compareIds.push(friendId)
     }
-    // this.setState({compareIds})
     localStorage.setItem('compareIds', compareIds);
     this.compareGames();
   }
@@ -220,6 +220,10 @@ class Main extends Component {
     }
   }
 
+  onGroupSelect(event) {
+    console.log(event.target.name);
+  }
+
   render() {
     return (
       <div>
@@ -256,6 +260,7 @@ class Main extends Component {
                 <Groups
                   userInfo={this.state.userInfo}
                   compareIds={this.state.compareIds}
+                  onGroupSelect={this.onGroupSelect}
                 />
                 :<div></div>
               }
