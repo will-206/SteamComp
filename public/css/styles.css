@@ -1,4 +1,5 @@
 body {
+  overflow-y: hidden;
   color: white;
   background-color: #1B1B1B;
   width: 960px;
@@ -6,8 +7,17 @@ body {
   font-family: sans-serif;
 }
 
+header {
+  border-bottom: 2px solid #292A2E;
+}
+
+h1 {
+  margin: 10px;
+}
+
 label {
   color: #B0AEAE;
+  margin-right: 4px;
 }
 
 input {
@@ -31,6 +41,7 @@ input:focus,button:focus,select:focus {
   -moz-box-shadow: none !important;
   box-shadow: none !important;
 }
+
 select {
   background-color: #292A2E;
   border: none;
@@ -52,14 +63,79 @@ button:active {
   top: 1px;
 }
 
+.group {
+  margin-top: 8px;
+}
+
+.bsButton {
+  background-color: #1B1B1B;
+  border: none;
+  color: #B0AEAE;
+}
+
+.bsButton:hover {
+  background-color: #1B1B1B;
+  color: white;
+}
+
+.dropdown-menu {
+  background-color: #252629;
+}
+
+.dropdown-menu>li>a {
+  color: #B0AEAE;
+}
+
 a, p {
   color: #57CBDE;
 }
 
-.avatar  {
+.hero {
+  background-image: url('/assets/steamCompBackground.png');
+  background-size: cover;
+  height: 500px;
+  width: 100vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  border-top: 1px solid #808181;
+  border-bottom: 1px solid #808181;
+}
+
+.sign-in {
+  box-shadow: 0px 0px 84px 17px rgba(0,219, 255,.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.sign-in:hover {
+  box-shadow: 0px 0px 84px 17px rgba(0,219, 255,1);
+}
+
+.avatar {
   border: 2px solid #57CBDE;
 }
 
+.userProfile {
+  display: inline-block;
+  /*background-color: red;*/
+}
+
+#friendsList {
+  border: 2px solid #292A2E;
+  height: 200px;
+  overflow: scroll;
+}
+
+#gamesList {
+  height: 800px;
+  overflow: scroll;
+}
+
+.userName {
+  margin-left: 5px;
+}
 .onlineState0 a, .onlineState0 p {
   color: #898989;
 }
@@ -67,10 +143,6 @@ a, p {
 .onlineState0 img {
   border: 2px solid #898989;
 }
-
-/*.onlineState1,.onlineState3 a {
-  color: #57CBDE;
-}*/
 
 .ownerFraction {
   /*width: 50px;*/

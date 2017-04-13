@@ -53,7 +53,7 @@ class FriendList extends Component {
         <button onClick={onClearAll}>
           Clear Selected
         </button>
-        <div>
+        <div id="friendsList">
           {friends[0] ?
             <div>
             { friends
@@ -73,9 +73,6 @@ class FriendList extends Component {
                 <input
                   type='checkbox'
                   name='friendCheckbox'
-                  // value={friend.steamid}
-                  // onChange={onCheck}
-                  // checked={compareIds.includes(friend.steamid)}
                   disabled="disabled"
                   title='Profile is Private'
                 />
@@ -89,7 +86,9 @@ class FriendList extends Component {
                 />
                 }
                 <img src={friend.avatar} className="avatar"></img>
-                <a href={friend.profileurl}>{friend.personaname}</a>
+                <a className="userName" href={friend.profileurl}>
+                  {friend.personaname}
+                </a>
                 <p> {formatPersonaState(friend.personastate, friend.lastlogoff)}</p>
                 {/* <a>{friend.steamid}</a> */}
               </div>

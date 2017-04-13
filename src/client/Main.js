@@ -223,19 +223,23 @@ class Main extends Component {
   render() {
     return (
       <div>
-        {this.state.userInfo.personastate ?
-          <div className={`onlineState${this.state.userInfo.personastate}`}>
-            <img src={this.state.userInfo.avatarmedium} className="avatar"></img>
-            <a href={this.state.userInfo.profileurl}>{this.state.userInfo.personaname} </a>
-            <p>{this.formatPersonaState(this.state.userInfo.personastate, this.state.userInfo.lastlogoff)}</p>
-            <a
-              href="api/logout"
-              onClick={this.onLogOut}
-            >Logout</a>
-          </div>
-          :
-          <i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-        }
+        <div className="userProfile">
+          {this.state.userInfo.steamid ?
+            <div className={`onlineState${this.state.userInfo.personastate}`}>
+              <img src={this.state.userInfo.avatarmedium} className="avatar"></img>
+              <a className="userName" href={this.state.userInfo.profileurl}>
+                {this.state.userInfo.personaname}
+              </a>
+              <p>{this.formatPersonaState(this.state.userInfo.personastate, this.state.userInfo.lastlogoff)}</p>
+              <a
+                href="api/logout"
+                onClick={this.onLogOut}
+              >Logout</a>
+            </div>
+            :
+            <i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+          }
+        </div>
 
         <Grid>
           <Row>
@@ -248,7 +252,13 @@ class Main extends Component {
                 onSelectAll={this.onSelectAll}
                 formatPersonaState={this.formatPersonaState}
               />
-              <Groups />
+              {this.state.userInfo.steamid ?
+                <Groups
+                  userInfo={this.state.userInfo}
+                  compareIds={this.state.compareIds}
+                />
+                :<div></div>
+              }
             </Col>
             <Col xs={8}>
               <Games

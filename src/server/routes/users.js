@@ -7,7 +7,7 @@ const knex = require('../../knex');
 const router = require('express').Router();
 
 router.post('/users', (req, res, next) => {
-  console.log(req);
+  // console.log(req);
   knex('users')
   .where('steam_userid', req.body.userid)
   .first()

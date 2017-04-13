@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Game from './Game';
 
-
 class Games extends Component {
   constructor(props) {
     super(props)
@@ -16,8 +15,6 @@ class Games extends Component {
     this.updateSearch = this.updateSearch.bind(this);
     this.onCheck = this.onCheck.bind(this);
     this.onPlatformChange = this.onPlatformChange.bind(this);
-    // this.onHover = this.onHover.bind(this);
-
   }
 
   orderByShared(a, b) {
@@ -44,12 +41,6 @@ class Games extends Component {
   onPlatformChange(event){
     this.setState({platform: event.target.value});
   }
-
-  // onHover(event){
-  //   console.log(event);
-  //   console.log(event.target.value);
-  //   // this.setState({openPanel: game.id});
-  // }
 
   render() {
     const friendsObj = this.props.friends.reduce((result, elem) => {
@@ -106,7 +97,7 @@ class Games extends Component {
         </label>
 
         <label>
-          Muliplayer
+          {'Muliplayer '}
           <input
             type='checkbox'
             name='multiplayerOnly'

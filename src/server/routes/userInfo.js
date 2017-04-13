@@ -12,7 +12,7 @@ router.get('/userInfo', ensureAuthenticated, (req, res, next) => {
 
   const user = req.query.ID;
   request(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_API_KEY}&steamids=${user}`, (error, response, body) => {
-    console.log(body)
+    // console.log(body)
 
     if (error) {
       res.send(error)

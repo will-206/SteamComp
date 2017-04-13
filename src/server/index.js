@@ -18,7 +18,8 @@ const bodyParser = require('body-parser');
 // const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 
-
+app.use(bodyParser.json());
+// app.use(cookieParser);
 app.use(compression());
 app.use(STATIC_PATH, express.static('dist'));
 app.use(STATIC_PATH, express.static('public'));
